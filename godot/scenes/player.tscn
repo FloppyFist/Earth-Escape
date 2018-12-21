@@ -1,0 +1,89 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scenes/player.gd" type="Script" id=1]
+[ext_resource path="res://scenes/SaucerSection.gd" type="Script" id=2]
+[ext_resource path="res://assets/character/path3351.png" type="Texture" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+
+custom_solver_bias = 0.0
+radius = 111.018
+
+[node name="Player" type="KinematicBody2D" index="0"]
+
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.08
+script = ExtResource( 1 )
+_sections_unfolded = [ "Angular", "Linear", "Pause" ]
+thereminMode = true
+thereminSmoothing = 0.166667
+playerDamp = 0.5
+angularChangeRate = 0.05
+angularMaximum = 30
+playerAgility = 2
+playerVelocity = 500
+
+[node name="CollisionShape" type="CollisionShape2D" parent="." index="0"]
+
+position = Vector2( 0, 21 )
+shape = SubResource( 1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="RevoluteJoint" type="PinJoint2D" parent="." index="1"]
+
+node_a = NodePath("..")
+node_b = NodePath("../SaucerSection")
+bias = 0.819
+disable_collision = true
+softness = 0.0
+
+[node name="SpringDamper" type="DampedSpringJoint2D" parent="." index="2"]
+
+position = Vector2( 441.294, -1929.12 )
+node_a = NodePath("..")
+node_b = NodePath("../SaucerSection")
+bias = 0.0
+disable_collision = true
+length = 2000.0
+rest_length = 2000.0
+stiffness = 9.0
+damping = 0.03
+_sections_unfolded = [ "Transform" ]
+
+[node name="SaucerSection" type="RigidBody2D" parent="." index="3"]
+
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+mode = 0
+mass = 1.0
+friction = 0.0
+bounce = 0.0
+gravity_scale = 0.0
+custom_integrator = false
+continuous_cd = 0
+contacts_reported = 0
+contact_monitor = false
+sleeping = false
+can_sleep = false
+linear_velocity = Vector2( 0, 0 )
+linear_damp = 0.0
+angular_velocity = 0.0
+angular_damp = 0.0
+script = ExtResource( 2 )
+_sections_unfolded = [ "Angular", "Linear" ]
+
+[node name="CollisionShape" type="CollisionPolygon2D" parent="SaucerSection" index="0"]
+
+build_mode = 0
+polygon = PoolVector2Array( -194.543, 49.2441, -194.8, 41.6619, -187.603, 29.4532, -175.394, 18.6582, -155.603, 7.99171, -128.744, -1.90373, -110.084, -6.13998, -107.986, -17.8532, -98.0214, -40.056, -88.7677, -53.1989, -73.743, -66.2918, -59.5768, -75.092, -44.9814, -81.5312, -29.5274, -87.1118, -11.2831, -89.9021, 9.33514, -89.9371, 22.4615, -88.6399, 42.0261, -83.4332, 63.3869, -74.3408, 79.6587, -61.3621, 93.6059, -46.8338, 100.517, -36.4756, 106.286, -23.1889, 108.506, -14.0307, 109.61, -6.77288, 120.356, -3.91621, 141.16, 2.37747, 163.888, 11.9928, 176.3, 20.0348, 186.153, 28.3355, 192.097, 37.4263, 193.846, 40.9228, 194.195, 48.4403, 191.223, 52.1116, 178.461, 58.0556, 157.482, 62.6011, 130.986, 73.882, 84.6067, 84.4228, 5.2871, 89.9567, -40.5654, 89.4297, -104.601, 80.7335, -167.018, 66.6398, -189.313, 57.1145 )
+
+[node name="Sprite" type="Sprite" parent="SaucerSection" index="1"]
+
+position = Vector2( 0.0019865, 0.0150037 )
+texture = ExtResource( 3 )
+_sections_unfolded = [ "Offset", "Transform" ]
+
+

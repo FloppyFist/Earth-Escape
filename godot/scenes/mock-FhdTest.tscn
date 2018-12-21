@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/fhd test pattern/Testbild-2D.jpg" type="Texture" id=1]
+
+[node name="Testbild-2D" type="Sprite"]
+
+position = Vector2( 960, 540 )
+texture = ExtResource( 1 )
+_sections_unfolded = [ "Animation", "Material", "Offset", "Pause", "Region", "Transform", "Visibility", "Z Index" ]
+
+
