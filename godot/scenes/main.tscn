@@ -5,7 +5,7 @@
 [ext_resource path="res://scenes/player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/hubblesite.org/STSCI-H-p1842a-f-4072x4133-texture.png" type="Texture" id=4]
 
-[node name="root" type="Node2D"]
+[node name="root" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 
@@ -1135,8 +1135,6 @@ polygon = PoolVector2Array( 514.967, 89.5385, -148.291, 89.7166, -149.704, 37.87
 
 position = Vector2( 960, 1072.85 )
 _sections_unfolded = [ "Angular", "Linear", "Pause", "Transform" ]
-thereminMode = true
-thereminSmoothing = 0.166667
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." index="3"]
 
