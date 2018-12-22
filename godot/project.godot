@@ -55,6 +55,5 @@ texture={
 [rendering]
 
 quality/intended_usage/framebuffer_allocation=0
-threads/thread_model=2
 quality/filters/msaa=1
 environment/default_environment="res://default_env.tres"
