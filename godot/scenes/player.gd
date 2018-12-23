@@ -38,9 +38,7 @@ func _on_joy_connection_changed(device_id, connected):
 	else:
 		print("Keyboard")
 
-func _physics_process(delta):
-	print(Input.get_connected_joypads().size())
-	# process is faster than _physics_process, so I will handle some indepentent stuff here:
+func _physics_process(delta):	# process is faster than _physics_process, so I will handle some indepentent stuff here:
 	var thrustAngle = get_transform().get_rotation()
 	steering(thrustAngle, delta)
 	pass

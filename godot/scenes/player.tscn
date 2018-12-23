@@ -1,8 +1,9 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://scenes/player.gd" type="Script" id=1]
+[ext_resource path="res://scenes/Player.gd" type="Script" id=1]
 [ext_resource path="res://scenes/SaucerSection.gd" type="Script" id=2]
 [ext_resource path="res://assets/character/path3351.png" type="Texture" id=3]
+
 
 [sub_resource type="CircleShape2D" id=1]
 
