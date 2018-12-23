@@ -23,13 +23,23 @@ export var playerAgility = 2;			# multiplier of left/right acceleration
 export var playerVelocity = 500			# vertical acceleration 'speed' ( game difficulty)
 
 
-#func _ready():
-#	pass
+func _ready():
+	Input.connect("joy_connection_changed", self, "_on_joy_connection_changed")
+#	Input.add_joy_mapping("03000000412300003680000000000000,Arduino Leonardo,platform:Windows,leftstick:a1,",true)
+	Input.add_joy_mapping("03000000412300003680000000000000,Arduino Leonardo,a:b0,b:b1,back:b6,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,dpup:h0.1,guide:b10,leftshoulder:b4,leftstick:b8,lefttrigger:a2,leftx:a0,lefty:a1,rightshoulder:b5,rightstick:b9,righttrigger:a5,rightx:a3,righty:a4,start:b7,x:b2,y:b3,",true)
+	pass
 
 #func _process(delta):
 #	pass
 
+func _on_joy_connection_changed(device_id, connected):
+	if connected:
+		print(Input.get_joy_name(device_id))
+	else:
+		print("Keyboard")
+
 func _physics_process(delta):
+	print(Input.get_connected_joypads().size())
 	# process is faster than _physics_process, so I will handle some indepentent stuff here:
 	var thrustAngle = get_transform().get_rotation()
 	steering(thrustAngle, delta)
@@ -64,7 +74,6 @@ func steering(thrustAngle, delta):
 		# in theremin mode, the position of the player is directly set by the control value
 		# since move_and_slide uses a speed [pixel/sec], it must be devided by delta to directly jump within one frame
 		steering = Vector2((screenSizeX/2 - currentPos + gamepadVal * screenSizeX / 2 ) / delta * thereminSmoothing, -playerVelocity)
-		print(thereminSmoothing)
 		move_and_slide(steering);
 	if (!thereminMode):
 		if (keyboardVal < 0):
