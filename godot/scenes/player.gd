@@ -9,18 +9,26 @@ extends KinematicBody2D
 	# ultimatively, you can actually flip the saucer in certain situations. that's a feature!
 
 # INIT #####################
-onready var steering = Vector2(0,0)
+onready var worldNode = get_tree().get_root().get_node("/root/World")
+onready var animator = $AnimationPlayer
+var steering = Vector2(0,0)
 var keyboardVal = 0
 var gamepadVal = 0
+var collisionsDetected = 0
+var gameOverCount = 0
+var collisionRelease = 0
+var gameOverFlag = false
+signal gameOverSignal
 # PARAMS ###################
 # exporting some parameters so they can be changed in the editor
+export var collisionGameOver = 45		# 0.75 second of collisions until game is over
 export var thereminMode = true			# special controller settings for theremin
 export var thereminSmoothing = 10.0/60	# smoothing of character movements in theremin mode
 export var playerDamp = 0.5				# damping (if ridigbody version of player)
 export var angularChangeRate = 0.05		# speed at which player can rotate, used for keyboard controls
 export var angularMaximum = 30			# max. steering angle of player (superimposed by dynamics)
 export var playerAgility = 2;			# multiplier of left/right acceleration
-export var playerVelocity = 500			# vertical acceleration 'speed' ( game difficulty)
+export var playerVelocity = 300			# vertical acceleration 'speed' ( game difficulty)
 
 
 func _ready():
@@ -32,15 +40,32 @@ func _ready():
 #func _process(delta):
 #	pass
 
-func _on_joy_connection_changed(device_id, connected):
-	if connected:
-		print(Input.get_joy_name(device_id))
-	else:
-		print("Keyboard")
+#func _on_joy_connection_changed(device_id, connected):
+#	if connected:
+#		print(Input.get_joy_name(device_id))
+#	else:
+#		print("Keyboard")
 
 func _physics_process(delta):	# process is faster than _physics_process, so I will handle some indepentent stuff here:
 	var thrustAngle = get_transform().get_rotation()
-	steering(thrustAngle, delta)
+	steer(thrustAngle, delta)
+	collisionsDetected = get_slide_count()
+	if (gameOverFlag == false):
+		move_and_slide(steering);
+		collisionHandling()
+	pass
+
+func collisionHandling():
+	if (collisionsDetected > 0):
+		gameOverCount += 1
+	elif (collisionsDetected == 0 and gameOverCount > 0):
+		collisionRelease += 1
+		if (collisionRelease > collisionGameOver):
+			gameOverCount = 0
+			collisionRelease = 0
+	if(gameOverCount > collisionGameOver):
+		gameOver()
+	print(gameOverCount)
 	pass
 
 #func _integrate_forces(state):
@@ -64,7 +89,7 @@ func _input(event):
 		keyboardVal = 0
 	pass
 
-func steering(thrustAngle, delta):
+func steer(thrustAngle, delta):
 	var thrustAngleDeg = thrustAngle*360/(2*PI)
 	if (thereminMode):
 		var screenSizeX = get_viewport().get_visible_rect().size.x
@@ -72,7 +97,6 @@ func steering(thrustAngle, delta):
 		# in theremin mode, the position of the player is directly set by the control value
 		# since move_and_slide uses a speed [pixel/sec], it must be devided by delta to directly jump within one frame
 		steering = Vector2((screenSizeX/2 - currentPos + gamepadVal * screenSizeX / 2 ) / delta * thereminSmoothing, -playerVelocity)
-		move_and_slide(steering);
 	if (!thereminMode):
 		if (keyboardVal < 0):
 			# check, if angle already too large:
@@ -87,5 +111,19 @@ func steering(thrustAngle, delta):
 			self.rotate((gamepadVal - thrustAngleDeg)*2*PI/360)
 		# the faster the game goes, the more maneuverable it must be! hence multiplying agility with acceleration
 		steering = Vector2(sin(thrustAngle) * playerAgility * playerVelocity, -playerVelocity)
-		move_and_slide(steering);
+		
 	pass
+
+func gameOver():
+	# the game over screen is handled by the animation:
+	$AnimationPlayer.play("gameOver")
+	# a state is change to prevent movement after game over:
+	gameOverFlag = true
+	pass
+
+
+
+
+func _on_AnimationPlayer_animation_finished(gameOver):
+	worldNode.gameOver()
+	pass # replace with function body

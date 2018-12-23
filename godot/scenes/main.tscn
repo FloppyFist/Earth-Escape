@@ -6,7 +6,7 @@
 [ext_resource path="res://scenes/WallSpawner.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/hubblesite.org/STSCI-H-p1720b-f-4147x4638_texture_small.png" type="Texture" id=5]
 
-[node name="World" type="Node2D" index="0"]
+[node name="World" type="Node2D"]
 
 script = ExtResource( 1 )
 
@@ -42,14 +42,13 @@ verticalOffset = 270
 [node name="PlayerScene" parent="." index="1" instance=ExtResource( 3 )]
 
 position = Vector2( 960, 1072.85 )
-_sections_unfolded = [ "Angular", "Linear", "Pause", "Transform" ]
-playerVelocity = 300
+_sections_unfolded = [ "Angular", "Linear", "Pause", "Transform", "Visibility", "Z Index" ]
+collisionGameOver = 45
 
 [node name="WallSpawner" parent="." index="2" instance=ExtResource( 4 )]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." index="3"]
 
-editor/display_folded = true
 layer = -1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -68,12 +67,13 @@ _sections_unfolded = [ "Scroll" ]
 motion_scale = Vector2( 0, 0.2 )
 motion_offset = Vector2( 0, 0 )
 motion_mirroring = Vector2( 2000, 2000 )
-_sections_unfolded = [ "Material", "Motion", "Transform" ]
+_sections_unfolded = [ "Material", "Motion", "Transform", "Visibility" ]
 
 [node name="Sprite" type="Sprite" parent="ParallaxBackground/Parallax Galaxy" index="0"]
 
+light_mask = 3
 texture = ExtResource( 5 )
 centered = false
-_sections_unfolded = [ "Offset", "Transform" ]
+_sections_unfolded = [ "Offset", "Transform", "Visibility" ]
 
 

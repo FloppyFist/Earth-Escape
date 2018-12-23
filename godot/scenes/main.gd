@@ -18,4 +18,13 @@ func _input(event):
 	if (event is InputEventKey):
 		if (event.scancode == KEY_ESCAPE):
 			get_tree().quit()
+	if (event is InputEventKey):
+		if (event.scancode == KEY_R):
+			get_tree().reload_current_scene()
+	pass
+	
+func gameOver():
+	# 
+	# finally, reloading everything from the beginning:
+	get_tree().reload_current_scene()
 	pass
