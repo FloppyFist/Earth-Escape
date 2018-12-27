@@ -69,7 +69,7 @@ func collisionHandling():
 			collisionRelease = 0
 	if(gameOverCount > collisionGameOver):
 		gameOver()
-	print(gameOverCount)
+	#print(gameOverCount)
 	pass
 
 #func _integrate_forces(state):
