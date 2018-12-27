@@ -19,10 +19,12 @@ var gameOverCount = 0
 var collisionRelease = 0
 var gameOverFlag = false
 signal gameOverSignal
+export var localinoPosition = 0.0		# extern so that it can be set by the receiver node
 # PARAMS ###################
 # exporting some parameters so they can be changed in the editor
 export var collisionGameOver = 45		# 0.75 second of collisions until game is over
-export var thereminMode = true			# special controller settings for theremin
+export var thereminMode = false			# special controller settings for theremin
+export var localinoMode = false			# special controller settings for Localino
 export var thereminSmoothing = 10.0/60	# smoothing of character movements in theremin mode
 export var playerDamp = 0.5				# damping (if ridigbody version of player)
 export var angularChangeRate = 0.05		# speed at which player can rotate, used for keyboard controls
@@ -47,6 +49,8 @@ func _ready():
 #		print("Keyboard")
 
 func _physics_process(delta):	# process is faster than _physics_process, so I will handle some indepentent stuff here:
+	if localinoMode:
+		gamepadVal = localinoPosition
 	var thrustAngle = get_transform().get_rotation()
 	steer(thrustAngle, delta)
 	collisionsDetected = get_slide_count()
@@ -74,6 +78,8 @@ func collisionHandling():
 #	pass
 
 func _input(event):
+	if localinoMode:
+		return
 	if (event is InputEventJoypadMotion):
 		if(event.axis == JOY_AXIS_0):
 			if(!thereminMode):
@@ -91,13 +97,13 @@ func _input(event):
 
 func steer(thrustAngle, delta):
 	var thrustAngleDeg = thrustAngle*360/(2*PI)
-	if (thereminMode):
+	if (thereminMode || localinoMode):
 		var screenSizeX = get_viewport().get_visible_rect().size.x
 		var currentPos = self.get_transform().origin.x
 		# in theremin mode, the position of the player is directly set by the control value
 		# since move_and_slide uses a speed [pixel/sec], it must be devided by delta to directly jump within one frame
 		steering = Vector2((screenSizeX/2 - currentPos + gamepadVal * screenSizeX / 2 ) / delta * thereminSmoothing, -playerVelocity)
-	if (!thereminMode):
+	if (!(thereminMode || localinoMode)):
 		if (keyboardVal < 0):
 			# check, if angle already too large:
 			if (thrustAngleDeg > -angularMaximum):
