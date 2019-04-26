@@ -41,7 +41,7 @@ tracks/1/keys = {
 "values": [ 0.00692392, 1200.0 ]
 }
 
-[node name="Player" type="KinematicBody2D" index="0"]
+[node name="Player" type="KinematicBody2D"]
 
 light_mask = 2
 input_pickable = false

@@ -3,6 +3,9 @@
 importer="texture"
 type="StreamTexture"
 path="res://.import/STSCI-H-p1720b-f-4147x4638_texture_small.png-e4cd10b6a009ed0d2bcacb662b9e5684.stex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
@@ -14,6 +17,7 @@ dest_files=[ "res://.import/STSCI-H-p1720b-f-4147x4638_texture_small.png-e4cd10b
 compress/mode=1
 compress/lossy_quality=0.7
 compress/hdr_mode=0
+compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=true
@@ -23,6 +27,7 @@ flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
+process/invert_color=false
 stream=false
 size_limit=0
 detect_3d=false

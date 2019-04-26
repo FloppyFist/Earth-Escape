@@ -6,7 +6,8 @@ var currentIterationPosition = Vector2(0,0)
 # PARAMS ###################
 var spawnIterations = 3								# number of walls spawned simultaneously
 export var spawnMarginY = 300						# offset by which walls will spawn outside viewport
-export var spawnRange = Vector2(100, 1920-100-360)	# range in X axis for gap to randomly appear
+export var spawnRange = Vector2(500, 600)
+#export var spawnRange = Vector2(100, 1920-100-360)	# range in X axis for gap to randomly appear
 export var wallDistance = 800						# distance between the walls
 
 func _ready():
@@ -46,5 +47,4 @@ func spawn():
 	# connect signal to call revolverSpawn again when the wall destroys itself:
 	newWall.connect("tree_exited", self, "revolverSpawn")
 	$Walls.add_child(newWall)
-	
 	pass

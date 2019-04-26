@@ -6,12 +6,13 @@ extends KinematicBody2D
 # A revolute joint allows "physic engine rotation" between main player node and SaucerSection
 # A linear spring allows for some dynamics to happen in the joint. This looks funny
 	# and allows to squeeze through the obstacles
-	# ultimatively, you can actually flip the saucer in certain situations. that's a feature!
+	# ultimatively, you can actually flip the saucer in certain situations. that's a feature, not a bug.
 
 # INIT #####################
 onready var worldNode = get_tree().get_root().get_node("/root/World")
 onready var animator = $AnimationPlayer
 var steering = Vector2(0,0)
+var gravitySteering = 0
 var keyboardVal = 0
 var gamepadVal = 0
 var collisionsDetected = 0
@@ -51,7 +52,8 @@ func _physics_process(delta):	# process is faster than _physics_process, so I wi
 	steer(thrustAngle, delta)
 	collisionsDetected = get_slide_count()
 	if (gameOverFlag == false):
-		move_and_slide(steering);
+		move_and_slide(steering); # conventional input methods
+		move_and_slide(Vector2( gravitySteering * 2 * playerVelocity, -playerVelocity))
 		collisionHandling()
 	pass
 
@@ -65,7 +67,6 @@ func collisionHandling():
 			collisionRelease = 0
 	if(gameOverCount > collisionGameOver):
 		gameOver()
-	print(gameOverCount)
 	pass
 
 #func _integrate_forces(state):

@@ -6,7 +6,7 @@
 
 script = ExtResource( 1 )
 spawnMarginY = 300
-spawnRange = Vector2( 100, 1460 )
+spawnRange = Vector2( 500, 600 )
 wallDistance = 800
 
 [node name="Walls" type="Node2D" parent="." index="0"]

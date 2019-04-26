@@ -4,7 +4,7 @@ extends Node2D
 # Every wall will destroy itself automatically if it's outside the view.
 
 # INIT #####################
-onready var cameraNode = get_tree().get_root().get_node("/root/World/CameraNode")
+onready var cameraNode = get_tree().get_root().get_node("/root/World/CameraFixture/Camera2D")
 # PARAMS ###################
 export var gapSize = 360	# Gap size between walls
 var destroyMargin = 100		# Wait this margin outside the camera to destroy the wall
